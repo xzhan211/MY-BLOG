@@ -31,12 +31,21 @@ app.get("/", function(req, res){
 });
 
 app.get("/posts/:postName", (req, res) => {
+  let found = false;
   posts.forEach(function(element){
-    if(element.title === lodash.lowerCase(req.params.postName)) {
+    if(lodash.lowerCase(element.title) === lodash.lowerCase(req.params.postName)) {
+      found = true;
       console.log("match found!");
+      res.render('post', {
+        postTitle: element.title,
+        postContent: element.content
+      });
     }
   })
-  // console.log(req.params.postName);
+  if(!found) {
+    console.log("Not found!");
+    res.redirect("/");
+  }
 });
 
 
@@ -55,7 +64,7 @@ app.get("/compose", function(req, res){
 
 app.post("/compose", function(req, res){
   const post = {
-    title: lodash.lowerCase(req.body.postTitle),
+    title: req.body.postTitle,
     content: req.body.postBody
   };
   posts.push(post);
