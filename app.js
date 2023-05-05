@@ -72,5 +72,5 @@ app.post("/compose", function(req, res){
 });
 
 app.listen(process.env.PORT || 3000, function(req, res) {
-  console.log("Server started on port 3000 or " + process.env.PORT);
+  console.log("Server started on port local 3000 or cloud " + process.env.PORT);
 });
